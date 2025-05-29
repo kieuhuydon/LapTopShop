@@ -19,9 +19,10 @@ public class User {
     private long id;
     private String email;
     private String password;
+    private String phoneNumber;
     private String fullName;
     private String address;
-    private String avatar;
+    //private String avatar;
     // RoleId
     // Many user thuộc về -> to one -> role
     @ManyToOne
@@ -72,26 +73,37 @@ public class User {
         this.address = address;
     }
 
-    public String getAvatar() {
+    /*public String getAvatar() {
         return avatar;
-    }
+    }*/
 
-    public void setAvatar(String avatar) {
+    /*public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }*/
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public User(long id, String email, String password, String fullName, String address, String avatar) {
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(long id, String email, String password,String phoneNumber,  String fullName, String address, String avatar) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.fullName = fullName;
         this.address = address;
-        this.avatar = avatar;
+    
     }
+    public User(){
+
+    };
 
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", avatar=" + avatar + "]";
+                + ", address=" + address + ", avatar="  + "]";
     }
 }
