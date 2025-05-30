@@ -1,6 +1,8 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.lang.classfile.ClassFile.Option;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,9 @@ public class UserSevice {
     }
     public List <User> getAllUsers(){
         return this.userRepository.findAll();
+    }
+    public User getUserById(long id){
+        return this.userRepository.findById(id);
+
     }
 }
