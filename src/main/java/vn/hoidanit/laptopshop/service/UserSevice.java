@@ -1,6 +1,4 @@
 package vn.hoidanit.laptopshop.service;
-
-import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,5 +24,9 @@ public class UserSevice {
     public User getUserById(long id){
         return this.userRepository.findById(id);
 
+    }
+
+    public void deleteUserById(long id){
+        this.userRepository.deleteById(id);
     }
 }

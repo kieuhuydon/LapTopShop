@@ -55,5 +55,33 @@ public class UserController {
         return "admin/user/view";
     }
 
+    //update
+    @GetMapping("/admin/user/update/{id}")
+    public String getUserUpdate(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        User currentUser = this.userSevice.getUserById(id);
+        model.addAttribute("currentUser", currentUser); // fil thông tin đã có
+        return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update/{id}")
+    public String updateUser(Model model, @ModelAttribute("currentUser") User currentUse) {
+        User updateUser = this.userSevice.getUserById(currentUse.getId());// lôi user chưa update từ database
+        if(updateUser!=null){
+            updateUser.setAddress(currentUse.getAddress());
+            updateUser.setFullName(currentUse.getFullName());
+            updateUser.setPhoneNumber(currentUse.getPhoneNumber());
+        }
+        this.userSevice.solveSave(updateUser);
+        return "redirect:/admin/user";
+    }
+
+    // delete
+    @GetMapping("/admin/user/delete/{id}")
+    public String deleteUser(Model model, @PathVariable long id) {// lấy giá trị id động từ view sang controller
+        this.userSevice.deleteUserById(id);
+        return "redirect:/admin/user";
+    }
+
 
 }
