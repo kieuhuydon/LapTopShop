@@ -9,7 +9,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
+
+import org.hibernate.validator.constraints.EAN;
 
 @Entity
 @Table(name = "users")
@@ -17,12 +23,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotNull (message = "Email không được để trống")
+    @Email (message = "Email không hợp lệ")
     private String email;
+
+    @NotNull (message="Mật khẩu không được để trống")
+    @Size(min = 3, message = "Mật khẩu phải tối thiểu 3 ký tự")
     private String password;
     private String phoneNumber;
+
+    @NotNull (message = "Tên người dùng  không được để trống")
+    @Size(min = 3, message = "Tên phải tối thiểu 3 ký tự")
     private String fullName;
+
     private String address;
-    //private String avatar;
+    private String avatar;
     // RoleId
     // Many user thuộc về -> to one -> role
     @ManyToOne
@@ -32,6 +48,23 @@ public class User {
     // one user có -> many orders
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+    
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public long getId() {
         return id;
@@ -73,13 +106,13 @@ public class User {
         this.address = address;
     }
 
-    /*public String getAvatar() {
+    public String getAvatar() {
         return avatar;
-    }*/
+    }
 
-    /*public void setAvatar(String avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }*/
+    }
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -88,14 +121,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(long id, String email, String password,String phoneNumber,  String fullName, String address, String avatar) {
+    public User(long id, String email, String password,String phoneNumber,  String fullName, String address, String avatar, Role role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.fullName = fullName;
         this.address = address;
-    
+        this.avatar = avatar;
+        this.role = role;
     }
     public User(){
 

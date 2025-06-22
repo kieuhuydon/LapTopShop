@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Order Page</title>
+        <title>Manage Order</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -22,14 +22,21 @@
             <jsp:include page="../layout/side-bar.jsp"/>
             <div id="layoutSidenav_content">
                 <main>
-                    <div>show order</div>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Manage Orders</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Orders</li>
+                        </ol>
+                    <div>Table Orders</div>
+                    </div>
                 </main>
                 <!--footer-->
                 <jsp:include page="../layout/footer.jsp"/>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="/js/scripts.js"></script>
+        
     </body>
 </html>

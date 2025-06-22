@@ -46,6 +46,9 @@ public class Role {
         this.description = description;
     }
 
+    public Role(){
+        
+    }
     public Role(long id, String name, String description) {
         this.id = id;
         this.name = name;
