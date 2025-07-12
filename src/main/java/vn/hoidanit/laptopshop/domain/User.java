@@ -1,6 +1,5 @@
 package vn.hoidanit.laptopshop.domain;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,14 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
-
-import org.hibernate.validator.constraints.EAN;
 
 @Entity
 @Table(name = "users")
@@ -48,6 +46,12 @@ public class User {
     // one user có -> many orders
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    //1 user - 1 cart
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+    
+
     
 
     public Role getRole() {
@@ -120,6 +124,7 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    
 
     public User(long id, String email, String password,String phoneNumber,  String fullName, String address, String avatar, Role role) {
         this.id = id;
@@ -139,5 +144,13 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
                 + ", address=" + address + ", avatar="  + "]";
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

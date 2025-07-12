@@ -41,6 +41,29 @@ public class Product {
     private String factory;
     private String target;
 
+  @OneToMany(mappedBy = "product")
+   private List<CartDetail> cartDetails;
+   //1 sản phẩm thuộc nhiều orderdetails
+   @OneToMany (mappedBy = "product")
+   private List<OrderDetail> orderDetails; 
+   
+
+    public List<CartDetail> getCartDetails() {
+    return cartDetails;
+}
+
+   public void setCartDetails(List<CartDetail> cartDetails) {
+    this.cartDetails = cartDetails;
+   }
+
+   public List<OrderDetail> getOrderDetails() {
+    return orderDetails;
+   }
+
+   public void setOrderDetails(List<OrderDetail> orderDetails) {
+    this.orderDetails = orderDetails;
+   } 
+
     public long getId() {
         return id;
     }

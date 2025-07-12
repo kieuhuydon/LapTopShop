@@ -52,7 +52,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary w-100 mt-4">Login</button>
-                                            <p class="text-center mt-2">Need an account? <a href="#"
+                                            <p class="text-center mt-2">Need an account? <a href="/register"
                                                     class="text-decoration-none">Sign up</a></p>
                                         </form>
                                     </div>

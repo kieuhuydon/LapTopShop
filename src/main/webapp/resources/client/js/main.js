@@ -1,3 +1,5 @@
+
+
 (function ($) {
     "use strict";
 
@@ -129,23 +131,68 @@
         })
     });
 
+     $('.quantity button').on('click', function (e) {
+        e.preventDefault(); // Ngăn hành vi mặc định
 
+        let change = 0;
+        const button = $(this);
+        const input = button.closest('.quantity').find('input');
+        let oldValue = parseFloat(input.val()) || 1; // Đảm bảo giá trị hợp lệ
 
-    // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
+        let newVal;
         if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
+            newVal = oldValue + 1;
+            change = 1;
         } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
-            }
+            newVal = oldValue > 1 ? oldValue - 1 : 1;
+            change = oldValue > 1 ? -1 : 0;
         }
-        button.parent().parent().find('input').val(newVal);
+
+        input.val(newVal);
+
+        //set from index
+    const index =input.attr("data-cart-detail-index")
+   
+    const el = document.getElementById(`cartDetails${index}.quantity`);
+
+    $(el).val(newVal);
+
+        // Lấy dữ liệu giá và id sản phẩm
+        const price = parseFloat(input.attr('data-cart-detail-price')) || 0;
+        const id = input.attr('data-cart-detail-id');
+
+        // Cập nhật giá của sản phẩm hiện tại
+        const priceElement = $(`p[data-cart-detail-id='${id}']`);
+        if (priceElement.length) {
+            const newPrice = price * newVal;
+            priceElement.text(formatCurrency(newPrice) + " đ");
+        }
+
+        // Cập nhật tổng giá trị giỏ hàng
+        const totalPriceElement = $("p[data-cart-total-price]");
+        if (totalPriceElement.length) {
+            const currentTotal = parseFloat(totalPriceElement.first().attr("data-cart-total-price")) || 0;
+            const newTotal = currentTotal + (change * price);
+
+            totalPriceElement.text(formatCurrency(newTotal) + " đ");
+            totalPriceElement.attr("data-cart-total-price", newTotal);
+        }
     });
 
-})(jQuery);
+    // Hàm định dạng tiền
+    function formatCurrency(value) {
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) return "0";
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'decimal',
+            minimumFractionDigits: 0
+        }).format(numValue);
+    }
 
+    
+
+
+
+    
+
+})(jQuery);

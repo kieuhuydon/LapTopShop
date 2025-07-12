@@ -1,9 +1,9 @@
 package vn.hoidanit.laptopshop.service;
 
-import java.util.Collection;
+
 import java.util.Collections;
 
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +32,7 @@ public class CustomUsersDetailService implements UserDetailsService{
         return new User(
             user.getEmail(),
             user.getPassword(),
-            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+user.getRole().getName()))
         );
 
     }

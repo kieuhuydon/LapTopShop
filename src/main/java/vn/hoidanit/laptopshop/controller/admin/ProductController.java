@@ -1,7 +1,11 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +33,29 @@ public class ProductController {
         this.upLoadService = upLoadService;
     }
 
-
+// phân trang 
 @GetMapping("/admin/product")
-    public String getProductTabel(Model model) {
-        List<Product> products = this.productService.getAllProducts();
-        model.addAttribute("products", products); //truyền products qua JSP
+    public String getProductTabel(Model model,
+    @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try{
+            if(pageOptional.isPresent()){
+                page = Integer.parseInt(pageOptional.get());
+            }else{
+                page = 1;
+            }
+        }catch(Exception e){
+
+        }
+
+        // đối tượng để lấy một trang page bắt đầu từ 0
+        Pageable pageAble = PageRequest.of(page - 1, 2);
+        // lấy sản phẩm trang hiện tại
+        Page<Product> products = this.productService.fetchProducts(pageAble);
+        List<Product> listProducts = products.getContent();
+        model.addAttribute("products", listProducts); //truyền products qua JSP
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", products.getTotalPages());
         return "admin/product/show";
     }
 
@@ -111,6 +133,8 @@ public class ProductController {
         this.productService.deleteProductById(id);
         return "redirect:/admin/product";
     }
+
+    
 
     
 

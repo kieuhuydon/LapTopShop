@@ -1,49 +1,35 @@
 package vn.hoidanit.laptopshop.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+public class CartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private long quantity;
+
     private double price;
-    // order id
-    // product id
-    // nhiều orderdetail thuộc 1 order
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
 
-    // 1 sản phẩm thuộc nhiều orderdetails
+    //cart_id:
+    //nhiều cartdetails - một cart
+    // xem cart_details thuộc về cart nào
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name="cart_id")
+    private Cart cart;
+
+    //product_id 
+    // 1 product - thuộc nhiều cart_details
+    @ManyToOne
+    @JoinColumn(name ="product_id")
     private Product product;
-    
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public long getId() {
         return id;
@@ -69,13 +55,32 @@ public class OrderDetail {
         this.price = price;
     }
 
-    public OrderDetail(long id, long quantity, long price) {
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public CartDetail(long id, long quantity, double price, Cart cart, Product product) {
         this.id = id;
         this.quantity = quantity;
         this.price = price;
+        this.cart = cart;
+        this.product = product;
     }
-    public OrderDetail(){
 
+    public CartDetail() {
     }
 
+    
 }
